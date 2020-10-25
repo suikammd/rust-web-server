@@ -10,7 +10,10 @@ fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     let pool = ThreadPool::new(4);
 
-    for stream in listener.incoming() {
+    // use take to accept only 2 requests to test shutdown
+    // if u really need to use this web server, remember to delete take(2)
+    // haha it's no way u will use this web server
+    for stream in listener.incoming().take(2) {
         let stream = stream.unwrap();
         pool.execute(|| {
             handle_connection(stream);

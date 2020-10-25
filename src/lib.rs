@@ -78,7 +78,6 @@ impl Worker {
         let thread = Some(thread::spawn(move || {
             loop {
                 let job = receiver.lock().unwrap().recv().unwrap();
-                println!("Worker {} got job", id);
 
                 match job {
                     Message::NewJob(job) => {
